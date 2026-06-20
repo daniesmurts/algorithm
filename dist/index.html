@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Алгоритм — Системный ремонт домов и квартир в Казани</title>
+  
+  <!-- Tailwind CSS & Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts Hanken Grotesk + Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class", 
+      theme: {
+        extend: {
+          colors: {
+            error: "#ba1a1a", 
+            "primary-fixed-dim": "#73dd7a", 
+            secondary: "#5f5e5e", 
+            "primary-container": "#118730", 
+            "on-secondary-fixed-variant": "#474746", 
+            "on-error-container": "#93000a", 
+            "inverse-surface": "#2f3031", 
+            "secondary-container": "#e2dfde", 
+            "surface-tint": "#006e23", 
+            surface: "#faf9f9", 
+            "on-surface": "#1b1c1c", 
+            "surface-container": "#efeded", 
+            "error-container": "#ffdad6", 
+            "primary-fixed": "#8ffa93", 
+            "inverse-on-surface": "#f2f0f0", 
+            "on-tertiary": "#ffffff", 
+            "on-secondary-container": "#636262", 
+            "on-primary-container": "#f7fff1", 
+            tertiary: "#5b5c5c", 
+            "surface-container-highest": "#e3e2e2", 
+            "surface-dim": "#dbdad9", 
+            "surface-variant": "#e3e2e2", 
+            "on-primary-fixed": "#002105", 
+            "tertiary-container": "#737575", 
+            "outline-variant": "#becab9", 
+            "surface-container-high": "#e9e8e8", 
+            "on-tertiary-container": "#fcfcfc", 
+            "on-primary": "#ffffff", 
+            "on-tertiary-fixed": "#1a1c1c", 
+            "on-background": "#1b1c1c", 
+            "secondary-fixed": "#e5e2e1", 
+            outline: "#6f7a6c", 
+            "on-surface-variant": "#3f4a3d", 
+            primary: "#006b22", 
+            "surface-bright": "#faf9f9", 
+            "on-secondary-fixed": "#1c1b1b", 
+            "on-secondary": "#ffffff", 
+            "surface-container-low": "#f4f3f3", 
+            "inverse-primary": "#73dd7a", 
+            "secondary-fixed-dim": "#c8c6c5", 
+            "surface-container-lowest": "#ffffff", 
+            "on-error": "#ffffff", 
+            "tertiary-fixed": "#e2e2e2", 
+            background: "#faf9f9", 
+            "tertiary-fixed-dim": "#c6c6c7", 
+            "on-tertiary-fixed-variant": "#454747", 
+            "on-primary-fixed-variant": "#005318"
+          }, 
+          borderRadius: {
+            DEFAULT: "0.25rem", 
+            lg: "0.5rem", 
+            xl: "0.75rem", 
+            full: "9999px"
+          }, 
+          spacing: {
+            "gutter-mobile": "16px", 
+            "margin-mobile": "20px", 
+            "margin-desktop": "64px", 
+            "gutter-desktop": "24px", 
+            base: "8px"
+          }, 
+          fontFamily: {
+            headline: ["Hanken Grotesk", "Inter", "sans-serif"],
+            display: ["Hanken Grotesk", "Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Hanken Grotesk", "Inter", "sans-serif"]
+          }, 
+          fontSize: {
+            "headline-xl": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], 
+            "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600"}], 
+            "body-md": ["16px", {lineHeight: "24px", fontWeight: "400"}], 
+            "label-caps": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600"}], 
+            "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}], 
+            "headline-lg-mobile": ["24px", {lineHeight: "32px", fontWeight: "600"}]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .bg-architectural {
+      background-image: linear-gradient(to bottom, rgba(18, 20, 20, 0.9), rgba(18, 20, 20, 0.9)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuBxfWKMHkeN6LNCBzF3QIzSQGr2yakQpf0ztd8ZEqvRnc1Vq3xuqwX6oLdgQjPAazyV52FUcSfHcPeWjkTAVthRoYt0ZdXgWf9LzgT3eL9h1--hJhUrrT2heW7f9Qm6L64KRyLWYJDsW4lkFl0_fhXV09Ap8mEjeFW2php44sh48DNNnF4DG0RtA3TX05MMXalWHXfXQyzg6uloBm72KU7J5LvO1BP74QBmHH72QC55VoGsOSZuxcf5R1DKvRuNoBaNWWsMlCcxYzI);
+      background-size: cover;
+      background-position: center;
+    }
+    /* Simple grid background to represent blueprints */
+    .blueprint-grid {
+      background-size: 40px 40px;
+      background-image: linear-gradient(to right, rgba(0, 107, 34, 0.02) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(0, 107, 34, 0.02) 1px, transparent 1px);
+    }
+    /* View Transitions Customizations */
+    ::view-transition-old(root) {
+      animation: fadeOut 0.2s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+    ::view-transition-new(root) {
+      animation: fadeIn 0.2s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+    ::view-transition-old(project-image),
+    ::view-transition-new(project-image) {
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+  </style>
+  <script type="module" crossorigin src="/assets/index-CJWu7McU.js"></script>
+</head>
+<body class="bg-background text-on-surface dark:bg-black dark:text-inverse-on-surface font-body antialiased blueprint-grid transition-colors duration-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 w-full z-45 bg-surface dark:bg-black/90 dark:backdrop-blur-md border-b border-surface-container-highest dark:border-neutral-800 transition-all duration-300 ease-in-out">
+    <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1440px] mx-auto">
+      <a href="#" class="h-10" aria-label="Алгоритм Лого">
+        <img alt="Алгоритм" class="h-full w-auto object-contain dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRR_aWTF711fP9Goej0pVT8rKs5cyqJwHCKCywKrQjWViGgYCojSqNZjiIyOHcVFYoPFIRxo-SsqdA9H5m7rCGBs1IuMx_ZGJPy-2PUeU9VVempu-jvJlhbPJXc4trEHPSNdLfHFf8ABrZYcSo0fcoUNjWGTcZ5OAZJ8hLaRDU5OUFGNwC2_6E2OCrMuoMEt66XnEuV4mUCr3vRgXpPxwRgMhmuEnNHuwqOpMC1VP6if8NAGL9_ghiUWXoXnTX43QlBOd1h2OpxKsX">
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#services">Услуги</a>
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#team">Команда</a>
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#advantages">Преимущества</a>
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#projects">Проекты</a>
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#process">Процесс</a>
+        <a class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 hover:text-primary transition-colors uppercase" href="#contacts">Контакты</a>
+      </nav>
+      <div class="flex items-center gap-6">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2 border border-surface-container-highest dark:border-neutral-800 rounded-full hover:border-primary text-on-surface dark:text-neutral-400 transition-colors flex items-center justify-center" aria-label="Переключить тему">
+          <svg class="w-5 h-5 block dark:hidden text-on-surface" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block text-neutral-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <a class="hidden lg:block font-body text-body-md font-semibold text-on-surface dark:text-white" href="tel:+78430000000">+7 (843) 000-00-00</a>
+        <button class="open-calc-btn bg-primary text-on-primary px-3.5 py-2 md:px-6 md:py-3 font-label text-[10px] md:text-label-caps hover:bg-primary-container transition-colors uppercase rounded font-semibold tracking-wider">Обсудить ремонт</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPA Container -->
+  <main id="view-container">
+
+    <!-- HOME VIEW PANEL -->
+    <div id="home-view" class="view-panel transition-opacity duration-300">
+      
+      <!-- Hero Section -->
+      <section class="relative min-h-[600px] md:min-h-[750px] flex items-center bg-surface-dim dark:bg-neutral-955">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop px-margin-mobile md:px-margin-desktop w-full max-w-[1440px] mx-auto py-12 md:py-0">
+          <div class="md:col-span-7 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-6">
+              <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.1 3.9a3.25 3.25 0 0 0-4.5 0L3.9 15.6a3.25 3.25 0 1 0 4.5 4.5L20.1 8.4a3.25 3.25 0 0 0 0-4.5z"/><path d="M12.5 7.5l4 4"/></svg>
+              <span class="font-label text-label-caps text-primary uppercase font-bold tracking-widest">Казань • Системный подход</span>
+            </div>
+            <h1 class="font-headline text-3xl sm:text-4xl md:text-headline-xl mb-6 max-w-2xl text-on-background dark:text-white">Ремонт домов и квартир без хаоса</h1>
+            <p class="font-body text-sm sm:text-base md:text-lg text-on-surface-variant dark:text-neutral-400 mb-8 max-w-xl">Системно ведём объект под ключ: смета, этапы, инженерия, отчёты и ответственность за результат.</p>
+            
+            <div class="flex flex-wrap gap-4 mb-10">
+              <div class="bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800 px-4 py-2 flex items-center gap-2 rounded-lg">
+                <svg class="w-[18px] h-[18px] text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="font-label text-[11px] uppercase text-on-surface dark:text-neutral-300">Дома и квартиры в Казани</span>
+              </div>
+              <div class="bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800 px-4 py-2 flex items-center gap-2 rounded-lg">
+                <svg class="w-[18px] h-[18px] text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span class="font-label text-[11px] uppercase text-on-surface dark:text-neutral-300">Прозрачная смета</span>
+              </div>
+              <div class="bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800 px-4 py-2 flex items-center gap-2 rounded-lg">
+                <svg class="w-[18px] h-[18px] text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                <span class="font-label text-[11px] uppercase text-on-surface dark:text-neutral-300">Управление этапами</span>
+              </div>
+              <div class="bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800 px-4 py-2 flex items-center gap-2 rounded-lg">
+                <svg class="w-[18px] h-[18px] text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span class="font-label text-[11px] uppercase text-on-surface dark:text-neutral-300">Фото- и видеоотчёты</span>
+              </div>
+              <div class="bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800 px-4 py-2 flex items-center gap-2 rounded-lg">
+                <svg class="w-[18px] h-[18px] text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="font-label text-[11px] uppercase text-on-surface dark:text-neutral-300">Гарантия 2 года</span>
+              </div>
+            </div>
+            <button class="open-calc-btn bg-primary text-on-primary w-fit px-12 py-5 font-label text-label-caps hover:bg-primary-container transition-colors uppercase tracking-widest rounded-lg font-bold">Обсудить ремонт</button>
+          </div>
+          <div class="md:col-span-5 relative h-[300px] sm:h-[400px] md:h-[550px] overflow-hidden self-center rounded-2xl border border-surface-container-highest/20 dark:border-neutral-800 shadow-xl">
+            <img class="absolute inset-0 w-full h-full object-cover" alt="Минималистичный дизайн интерьера Алгоритм" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3W75k9vxUKJa7alVz1-aamuNzEUiNtDTZ5flLG2N0yd0DGaC-ZlbUtb5iY14XFVvDxKnptv1eKQc6wV2cM37Hlf7H3cSxlSHiLZ4_XYIO9bkC5mpNknVvXbS4fjIAmaoagsf_iTN3xpdgWowIds9CYff7ckNlNXrX-E50qdA7d7zKuYj_FkqFE7JfSPwSTZiFP_VXUFUCwfyKlwF0d2YV_1P3HuQgS-xKyoJIrj-TMEAJGSYbZyme4qCDSi8dkuAlPaxDQBemK7g">
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="py-24 bg-surface dark:bg-neutral-950 border-t border-b border-surface-container-highest dark:border-neutral-900" id="services">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+          <h2 class="font-headline text-headline-lg text-center max-w-3xl mx-auto text-on-background dark:text-white">Вся реализация объекта — в одном ответственном контуре</h2>
+          <p class="text-center text-on-surface-variant dark:text-neutral-400 mt-4 mb-16 max-w-2xl mx-auto text-sm md:text-base">Берём на себя ключевые этапы ремонта дома или квартиры: от технической подготовки и инженерии до чистовой реализации и финального результата.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-desktop">
+            
+            <!-- Cards -->
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Дома под ключ</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Инженерия, черновые и чистовые этапы, координация работ и контроль результата на всём протяжении проекта.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">от 45 000 ₽ / м²</span>
+            </div>
+
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="16"/><line x1="15" y1="22" x2="15" y2="16"/><line x1="9" y1="16" x2="15" y2="16"/><path d="M8 6h2v2H8V6zm0 4h2v2H8v-2zm8-4h2v2h-2V6zm0 4h2v2h-2v-2z"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Квартиры под ключ</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Реализация квартиры по дизайн-проекту с вниманием к геометрии, инженерии, чистовой сборке и деталям.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">от 35 000 ₽ / м²</span>
+            </div>
+
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="15" x2="15" y2="15"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="15" r="1"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Инженерные работы</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Электрика, сантехника, отопление и скрытые коммуникации — с технической логикой, проектным подходом и контролем узлов.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">Гарантия на монтаж</span>
+            </div>
+
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 3 3M6 18l8.5-8.5a2.12 2.12 0 1 1 3 3L9 21H6v-3z"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Малярные работы</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Подготовка поверхностей, геометрия, финишные покрытия и аккуратная чистовая реализация.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">Собственная школа маляров</span>
+            </div>
+
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.1 3.9a3.25 3.25 0 0 0-4.5 0L3.9 15.6a3.25 3.25 0 1 0 4.5 4.5L20.1 8.4a3.25 3.25 0 0 0 0-4.5z"/><path d="M12.5 7.5l4 4"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Если проекта пока нет</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Подключим партнёра-дизайнера или начнём с технического обследования, чтобы понять задачу и выстроить дальнейшие шаги.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">Консультация бесплатно</span>
+            </div>
+
+            <div class="p-8 bg-surface-container dark:bg-neutral-900 border border-surface-container-highest dark:border-neutral-800/80 hover:border-primary transition-colors flex flex-col h-full rounded-2xl shadow-sm animate-card">
+              <svg class="w-10 h-10 text-primary mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Если объект уже начат</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 mb-8 text-sm leading-relaxed">Оценим состояние, риски и возможность взять ответственность за дальнейшую реализацию.</p>
+              <hr class="my-6 border-surface-container-highest dark:border-neutral-800">
+              <span class="font-label text-label-caps text-primary font-bold">Технический аудит</span>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Team / Founder -->
+      <section class="py-24 bg-surface-container-low dark:bg-neutral-950 overflow-hidden" id="team">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop items-center">
+          <div class="md:col-span-5 order-2 md:order-1">
+            <div class="relative group rounded-2xl overflow-hidden border border-surface-container-highest dark:border-neutral-800 shadow-lg">
+              <img class="w-full h-auto object-cover" alt="Портрет Айрата, основателя компании Алгоритм" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZG1javw6NX2fy4bB3B96zpgo7TKTcy8Axrhkl2bV9CRTgBxlWE0AGEDMitFofb11OUHA0bOXm7Rif-XKIBrKF9SyP3l-oFkz72JEnZ2aVgPgLqoqnoxGlh5_fNGyYhhZfFyfpQY3O-TdbkmJjlYU0GoY3PwfoLtieGaU9vWpRDzqTCdjq2lcZHCgA3bpYDpvdXRn2bsaP6FPMYUqEgf_2zx5fvh3HG7KBOoiaJ6A6KBgrRyFUsqOwB1kRjzDzYqSaqjbky5lM5j4">
+            </div>
+          </div>
+          <div class="md:col-span-6 md:ml-12 order-1 md:order-2 mb-16 md:mb-0">
+            <h2 class="font-headline text-headline-lg mb-8 text-on-background dark:text-white">За объект отвечает не случайная бригада, а команда</h2>
+            <p class="font-body text-lg text-on-surface-variant dark:text-neutral-400 mb-6 font-bold">Я Айрат, основатель компании «Алгоритм».</p>
+            <p class="font-body text-on-surface-variant dark:text-neutral-400 mb-8 leading-relaxed text-sm md:text-base">Мы строим работу так, чтобы клиент понимал, что происходит с его объектом: по смете, срокам, этапам и решениям. Для нас ремонт — это не набор отдельных работ, а управляемый процесс, где каждый этап должен подготовить следующий.</p>
+            
+            <h3 class="font-label text-label-caps text-primary uppercase font-bold tracking-wider mb-4">Мини-принципы:</h3>
+            <ul class="space-y-3 mb-10 text-on-surface-variant dark:text-neutral-400 text-sm">
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Не начинаем без понимания объекта.</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Считаем и согласовываем решения заранее.</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Ведём этапы по понятной логике.</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Отвечаем за результат командой.</span>
+              </li>
+            </ul>
+
+            <div class="flex gap-4 mb-10">
+              <button class="open-calc-btn bg-primary text-on-primary w-fit px-10 py-5 font-label text-label-caps hover:bg-primary-container transition-all uppercase tracking-widest rounded-lg font-bold shadow-md">Обсудить ваш объект</button>
+              <button id="open-checklist-btn" class="border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white w-fit px-10 py-5 font-label text-label-caps hover:bg-surface-container-highest transition-all uppercase tracking-widest rounded-lg font-bold">Чек-лист 150 точек</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8 border-t border-surface-container-highest dark:border-neutral-800 pt-8">
+              <div>
+                <p class="font-headline text-headline-lg text-primary mb-1 font-extrabold">12+</p>
+                <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-neutral-400">Лет опыта в строительстве</p>
+              </div>
+              <div>
+                <p class="font-headline text-headline-lg text-primary mb-1 font-extrabold">80+</p>
+                <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-neutral-400">Успешно сданных объектов</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advantages -->
+      <section class="py-24 bg-surface dark:bg-neutral-950 border-t border-b border-surface-container-highest dark:border-neutral-900" id="advantages">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+          <h2 class="font-headline text-headline-lg text-center max-w-3xl mx-auto text-on-background dark:text-white">Качество ремонта начинается с выбора команды, которая отвечает за результат</h2>
+          <p class="text-center text-on-surface-variant dark:text-neutral-400 mt-4 mb-16 max-w-2xl mx-auto text-sm md:text-base">Мы выстраиваем работу так, чтобы клиент понимал, что происходит на объекте, чувствовал контроль над процессом и получал предсказуемый результат.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">01</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Сильная команда, глубоко вовлечённая в результат</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">У нас работают опытные специалисты, которые по-настоящему любят своё дело и держат высокий стандарт качества на каждом этапе реализации.</p>
+            </div>
+
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">02</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Рациональный подход к бюджету проекта</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Мы помогаем сохранить баланс между визуальной идеей, технической надёжностью и реальным бюджетом, не жертвуя качеством там, где это действительно важно.</p>
+            </div>
+
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">03</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Фокус на каждом объекте</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Один прораб ведёт не более трёх объектов одновременно. Это позволяет сохранять высокий уровень вовлечённости, оперативно решать вопросы и держать под контролем весь процесс.</p>
+            </div>
+
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">04</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Прозрачность на каждом этапе</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">До старта работ подробно проговариваем ключевые решения, составляем детальную смету и формируем график работ и платежей, чтобы вы заранее понимали логику процесса и могли планировать бюджет.</p>
+            </div>
+
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">05</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Комфортный и понятный процесс</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Вы всегда понимаете, что происходит на объекте: получаете фото- и видеоотчёты, видите актуальные расходы и быстро получаете ответы на возникающие вопросы.</p>
+            </div>
+
+            <div class="space-y-4 p-6 bg-surface-container-low dark:bg-neutral-900/40 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block font-black">06</span>
+              <h3 class="font-headline text-[20px] mb-4 uppercase text-on-surface dark:text-white font-bold">Внутренняя система подготовки маляров</h3>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">У нас есть собственный учебный центр, благодаря которому мы формируем сильную школу малярных работ и поддерживаем высокий стандарт исполнения.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="py-24 bg-surface-container-lowest dark:bg-neutral-950" id="projects">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+          <div class="flex justify-between items-end mb-20">
+            <h2 class="font-headline text-headline-lg text-on-background dark:text-white font-extrabold">Проекты, которые<br>мы реализуем</h2>
+            <button class="open-calc-btn border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white px-8 py-4 font-label text-label-caps hover:bg-surface-container-highest transition-all uppercase rounded font-semibold">Обсудить ремонт</button>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter-desktop">
+            
+            <!-- Project Card 1 -->
+            <article class="portfolio-card group cursor-pointer" data-project-id="forest_park">
+              <div class="aspect-[16/10] overflow-hidden mb-6 rounded-2xl border border-surface-container-highest dark:border-neutral-800 shadow-md">
+                <img class="portfolio-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-103" alt="Резиденция Лесной парк" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD050alTScorGAgM_Wd3iCTWcxtmz82XQDuuvFB0musdrm7lJePMJwGTyWRUa8qConvsbdaBg5JObe2Qc0jcP5clAZAd52_Jvx0eDGmlfCR3--9cOimzRJpOkKHElukYQECPNLUKmL0ikqJaIioFO_WTTF0S-YqGF9a9d8CaUmPyHbjV9JNGcYMnJLdrAkmb0DvdREioesc5upXjk_koRu9j-d8yM7_f6PH_tObqJ08n8IkNL5XuV0garjPWW_74XX38m832s6I8w0">
+              </div>
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-primary text-on-primary text-[10px] px-2.5 py-1 font-label uppercase rounded font-bold">Реализованный объект</span>
+                    <span class="font-label text-[11px] text-on-surface-variant dark:text-neutral-400 uppercase font-semibold">Коттедж 240 м² • Дом под ключ</span>
+                  </div>
+                  <h3 class="font-headline text-[22px] uppercase text-on-surface dark:text-white font-bold card-title">Резиденция «Лесной парк»</h3>
+                </div>
+                <span class="p-2 border border-surface-container-highest dark:border-neutral-800 rounded-full flex items-center justify-center"><svg class="w-5 h-5 text-primary group-hover:translate-x-1.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </div>
+            </article>
+
+            <!-- Project Card 2 -->
+            <article class="portfolio-card group cursor-pointer" data-project-id="savin_house">
+              <div class="aspect-[16/10] overflow-hidden mb-6 rounded-2xl border border-surface-container-highest dark:border-neutral-800 shadow-md">
+                <img class="portfolio-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-103" alt="Апартаменты Savin House" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAKRRyE440AFj4x0A9A5eCuPgTpmLTpAzygw5_kk9HceOotfItHS26NI3MyZnOQ4ZDU8pO-whNhjzlUtLhMakWBHiYq5RZMal5w8YOlTnXKpO6GiQ72YmGwDXvoYkk3tX5MLorjGZWsp70Rky_Sz5oHRd2y2ehns8XYbkeBuTvNbI8FIFxW8dKdecupfV-fX2gRKWTkrzKAoBAiueeXSKS_MtoHYUTU01gm7T0_UoNJb-2P7jZP2MKbi9h5kmUx4bpPk1Pga6IMYo">
+              </div>
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-surface-container-highest dark:bg-neutral-800 text-on-surface dark:text-white text-[10px] px-2.5 py-1 font-label uppercase rounded font-bold">Проект в реализации</span>
+                    <span class="font-label text-[11px] text-on-surface-variant dark:text-neutral-400 uppercase font-semibold">Квартира 115 м² • Реализация по дизайн-проекту</span>
+                  </div>
+                  <h3 class="font-headline text-[22px] uppercase text-on-surface dark:text-white font-bold card-title">Апартаменты Savin House</h3>
+                </div>
+                <span class="p-2 border border-surface-container-highest dark:border-neutral-800 rounded-full flex items-center justify-center"><svg class="w-5 h-5 text-primary group-hover:translate-x-1.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </div>
+            </article>
+
+          </div>
+          
+          <div class="mt-20 text-center">
+            <button class="open-calc-btn bg-primary text-on-primary px-12 py-5 font-label text-label-caps hover:bg-primary-container transition-colors uppercase tracking-widest rounded-lg font-bold shadow-md">Обсудить похожий объект</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="py-24 bg-surface dark:bg-neutral-950 border-t border-surface-container-highest dark:border-neutral-900" id="process">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+          <h2 class="font-headline text-headline-lg text-center text-on-background dark:text-white">Понятный путь от первого разговора до сдачи объекта</h2>
+          <p class="text-center text-on-surface-variant dark:text-neutral-400 mt-4 mb-16 max-w-2xl mx-auto text-sm md:text-base">Мы заранее выстраиваем логику работ, чтобы каждый этап был понятен клиенту и готовил следующий шаг реализации.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-16">
+            
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">01</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">1. Обсуждаем задачу</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">На первом разговоре понимаем тип объекта, площадь, стадию, наличие проекта, сроки и ваши ожидания от ремонта.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">02</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">2. Изучаем объект и проект</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Погружаемся в планировки, инженерные решения, дизайн-проект и реальные условия на объекте. Если проекта пока нет — предлагаем дальнейший путь: техническое обследование или подключение партнёра-дизайнера.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">03</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">3. Оцениваем технические риски</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Смотрим, какие решения могут повлиять на сроки, бюджет, инженерные узлы, скрытые работы и качество будущей реализации.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">04</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">4. Формируем смету и график</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Составляем детальную смету, определяем последовательность этапов и формируем график работ и платежей.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">05</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">5. Фиксируем договорённости</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Проговариваем ключевые условия, состав работ, порядок согласований, сроки, ответственность и формат коммуникации.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">06</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">6. Запускаем работы на объекте</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Организуем старт, подготавливаем объект, защищаем важные зоны, выстраиваем работу команды и руководителя проекта.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">07</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">7. Ведём объект по этапам</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Контролируем ход работ, согласовываем изменения, отправляем фото- и видеоотчёты, следим за расходами, сроками и качеством.</p>
+            </div>
+
+            <div class="relative p-6 bg-surface-container-low dark:bg-neutral-900/30 rounded-xl border border-surface-container-highest dark:border-neutral-800">
+              <span class="font-headline text-headline-lg text-primary opacity-30 block mb-4 font-black">08</span>
+              <h4 class="font-headline text-[18px] mb-3 uppercase text-on-surface dark:text-white font-bold">8. Передаём результат и гарантию</h4>
+              <p class="text-on-surface-variant dark:text-neutral-400 text-sm leading-relaxed">Финально проверяем выполненные работы, передаём объект и фиксируем гарантийные обязательства.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="py-32 bg-architectural relative overflow-hidden">
+        <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto text-center relative z-10">
+          <div class="mb-10 flex justify-center">
+            <img alt="Алгоритм Лого" class="w-16 h-16 md:w-20 md:h-20 object-contain opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuK1gM3j3mWHKjO4beSPy6FWtbCZpUCffy62qu3SEZsWOYcU3Ys9j8qQ1kGeGJhQJvvmosIhvaVLEqhJ8qomYavrik8H-stDEHl8hIrWdE2dEvcrj0vI8LpBszLB1AKCKsyyXmCb2nqizrvx2xBzWwzWZtgrTVANpvKETp5iquFanMLo8CaKEpSeLjLbKUZTo1xWbF1AtJc7Swk14f55l1O2EUje2OvEno83BYN6C01H3XyCD-Bs479wYcah1BRBjst3wnrqta0AEV">
+          </div>
+          <h2 class="font-headline text-headline-xl mb-8 max-w-4xl mx-auto uppercase text-surface-container-lowest text-white">Хороший ремонт — это не импровизация, а чёткий <span class="text-primary-fixed-dim">АЛГОРИТМ</span> действий</h2>
+          <div class="font-body text-base md:text-lg mb-10 max-w-3xl mx-auto text-neutral-300 space-y-4">
+            <p>«Алгоритм» — это не просто название. Это принцип нашей работы.</p>
+            <p>Мы уверены, что даже сложный объект можно реализовать спокойно, точно и качественно, если в основе лежит система: понятная логика этапов, продуманные решения, техническая дисциплина и контроль на каждом шаге.</p>
+            <p>Когда мы видим проект, мы понимаем не только красивую картинку, но и путь, по которому объект должен к ней прийти. Для нас ремонт — это всегда алгоритм действий, который позволяет доводить сложные задачи до предсказуемого результата.</p>
+          </div>
+          <p class="font-headline text-md md:text-lg mb-8 max-w-2xl mx-auto text-primary-fixed-dim font-bold">Если вы ищете подрядчика, который умеет вести объект системно — обсудим ваш ремонт.</p>
+          <button class="open-calc-btn bg-primary text-on-primary px-16 py-6 font-label text-label-caps hover:bg-primary-container transition-colors uppercase tracking-[0.2em] rounded-lg font-bold shadow-lg">Обсудить ремонт</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- DETAIL VIEW PANEL (HIDDEN BY DEFAULT) -->
+    <div id="detail-view" class="view-panel transition-opacity duration-300 hidden">
+      <div class="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto py-12">
+        
+        <div class="mb-10">
+          <button id="back-to-list-btn" class="flex items-center gap-2 text-primary font-bold uppercase tracking-wider font-label hover:underline">
+            <svg class="w-5 h-5 inline-block align-middle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Назад к проектам
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <div class="lg:col-span-8">
+            <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-surface-container-highest dark:border-neutral-800 shadow-md">
+              <img id="detail-hero-image" src="" alt="" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex flex-col justify-between">
+            <div>
+              <h2 id="detail-heading" class="font-headline text-[32px] font-bold uppercase text-on-surface dark:text-white mb-6 leading-tight" tabindex="-1"></h2>
+              <p id="detail-description" class="text-on-surface-variant dark:text-neutral-400 mb-8 leading-relaxed"></p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 border-t border-surface-container-highest dark:border-neutral-800 pt-6">
+              <div>
+                <p class="text-[11px] font-label uppercase tracking-widest text-on-surface-variant dark:text-neutral-400">Площадь</p>
+                <p id="spec-area" class="font-headline text-lg font-bold text-primary"></p>
+              </div>
+              <div>
+                <p class="text-[11px] font-label uppercase tracking-widest text-on-surface-variant dark:text-neutral-400">Локация</p>
+                <p id="spec-location" class="font-headline text-lg font-semibold text-primary"></p>
+              </div>
+              <div>
+                <p class="text-[11px] font-label uppercase tracking-widest text-on-surface-variant dark:text-neutral-400">Срок</p>
+                <p id="spec-duration" class="font-headline text-lg font-semibold text-primary"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-12 border-t border-surface-container-highest dark:border-neutral-900 pt-12 mt-6">
+            <h3 class="font-headline text-headline-lg text-on-surface dark:text-white uppercase mb-8">Инженерные и технологические акценты</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="detail-accents-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer / Contacts -->
+  <footer class="w-full border-t border-surface-container-highest dark:border-neutral-900 bg-surface-container-lowest dark:bg-black transition-colors duration-300" id="contacts">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop px-margin-mobile md:px-margin-desktop py-24 max-w-[1440px] mx-auto">
+      <div class="md:col-span-4">
+        <div class="flex items-center gap-4 mb-8">
+          <img alt="Лого" class="w-10 h-10 object-contain dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuK1gM3j3mWHKjO4beSPy6FWtbCZpUCffy62qu3SEZsWOYcU3Ys9j8qQ1kGeGJhQJvvmosIhvaVLEqhJ8qomYavrik8H-stDEHl8hIrWdE2dEvcrj0vI8LpBszLB1AKCKsyyXmCb2nqizrvx2xBzWwzWZtgrTVANpvKETp5iquFanMLo8CaKEpSeLjLbKUZTo1xWbF1AtJc7Swk14f55l1O2EUje2OvEno83BYN6C01H3XyCD-Bs479wYcah1BRBjst3wnrqta0AEV">
+          <div class="font-headline text-[24px] text-primary tracking-tighter uppercase font-bold dark:text-white">Алгоритм</div>
+        </div>
+        <h3 class="font-headline text-[22px] uppercase text-on-surface dark:text-white font-bold mb-4">Обсудим ваш ремонт</h3>
+        <p class="text-on-surface-variant dark:text-neutral-400 max-w-xs mb-8 text-sm leading-relaxed">Если вы планируете ремонт дома или квартиры в Казани и хотите заранее понять, как выстроить процесс без хаоса, свяжитесь с нами удобным способом.</p>
+        <div class="space-y-4">
+          <a class="block font-headline text-[28px] text-on-background dark:text-white hover:text-primary transition-colors" href="tel:+78430000000">+7 (843) 000-00-00</a>
+          <p class="font-label text-label-caps text-on-surface-variant dark:text-neutral-400 uppercase">Пн — Сб: 09:00 - 19:00</p>
+        </div>
+      </div>
+      <div class="md:col-span-4 flex flex-col gap-8">
+        <h4 class="font-label text-label-caps text-primary uppercase font-bold">Напишите нам</h4>
+        <div class="flex flex-col gap-4">
+          <a class="flex items-center gap-3 p-4 border border-surface-container-highest dark:border-neutral-800 hover:border-primary transition-colors bg-surface-container dark:bg-neutral-900 rounded-lg shadow-sm" href="#">
+            <svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <span class="font-label text-label-caps uppercase text-on-surface dark:text-neutral-300 font-bold">WhatsApp</span>
+          </a>
+          <a class="flex items-center gap-3 p-4 border border-surface-container-highest dark:border-neutral-800 hover:border-primary transition-colors bg-surface-container dark:bg-neutral-900 rounded-lg shadow-sm" href="#">
+            <svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span class="font-label text-label-caps uppercase text-on-surface dark:text-neutral-300 font-bold">Telegram</span>
+          </a>
+        </div>
+      </div>
+      <div class="md:col-span-4">
+        <h4 class="font-label text-label-caps text-primary uppercase mb-8 font-bold">Офис в Казани</h4>
+        <p class="text-on-surface-variant dark:text-neutral-400 mb-4 text-sm">ул. Чистопольская, 20/1, офис 402</p>
+        <div class="w-full h-48 bg-surface-container dark:bg-neutral-900 overflow-hidden rounded-xl border border-surface-container-highest dark:border-neutral-800 shadow-md">
+          <img class="w-full h-full object-cover" alt="Офис компании Алгоритм в Казани" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWRZfNCUMQgtmv660_CiTMbdAOotOPGsdyVozUyrgrBzKjqLiF1QQguz8c1mbKrnJygZaT8tyj6cVsIQdTvXLAdsz1BOZQlMmSR3H8m09xLuvq168BJjY3v9tWKTKaiWstq5A9uy8y5106gfVWbF4Pan-mMP00n2trV5tTvadFTRFlnaEweCFvFUNNQlpiSGcRJRzf_ZV1D9M3ZM9GEREO0dBKWLhzuHxPp7dWZzVw8Ev7kNUmd06njkx5GyMjk6WYQzSfrsrR94A">
+        </div>
+      </div>
+      <div class="md:col-span-12 border-t border-surface-container-highest dark:border-neutral-800 pt-12 flex flex-col md:flex-row justify-between gap-6">
+        <p class="font-label text-[10px] text-on-surface-variant dark:text-neutral-500 uppercase">© 2026 Алгоритм. Системная точность в строительстве.</p>
+        <div class="flex gap-8">
+          <a class="font-label text-[10px] text-on-surface-variant dark:text-neutral-500 hover:text-primary uppercase" href="#">Политика конфиденциальности</a>
+          <a class="font-label text-[10px] text-on-surface-variant dark:text-neutral-500 hover:text-primary uppercase" href="#">Условия использования</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 150-POINT CHECKLIST DRAWER (MODAL OVERLAY) -->
+  <div id="checklist-drawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" id="drawer-backdrop"></div>
+    <div class="absolute inset-y-0 right-0 max-w-full flex">
+      <div class="w-screen max-w-lg bg-surface dark:bg-neutral-950 shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out" id="drawer-container" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+        <div class="px-6 py-6 border-b border-surface-container-highest dark:border-neutral-800 flex justify-between items-center bg-surface-container-lowest dark:bg-black">
+          <h3 id="drawer-title" class="font-headline text-lg font-bold text-on-surface dark:text-white uppercase tracking-wider">Регламент качества «Алгоритм»</h3>
+          <button id="close-drawer-btn" class="text-on-surface-variant dark:text-neutral-400 hover:text-primary text-3xl font-light focus:outline-none" aria-label="Закрыть регламент">&times;</button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+          <p class="text-sm text-on-surface-variant dark:text-neutral-400 leading-relaxed">Наш регламент проверки разделен на 6 технологических этапов. Каждый этап жестко контролируется ведущим инженером.</p>
+          
+          <div class="space-y-4">
+            
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="0">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>01. Подготовительный этап</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Проверка перепадов высот плит перекрытий лазерным уровнем.</li>
+                  <li>Контроль плоскости и вертикальности несущих стен.</li>
+                  <li>Аудит существующих вентиляционных шахт на предмет тяги.</li>
+                  <li>Гидроизоляция стыков плит перекрытия.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="1">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>02. Монтаж перегородок</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Использование только полнотелого кирпича или пеноблоков D600.</li>
+                  <li>Армирование каждых двух рядов кладки базальтовой сеткой.</li>
+                  <li>Выведение углов ровно 90° в зонах будущей мебели.</li>
+                  <li>Монтаж демпферной ленты по периметру перегородок.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="2">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>03. Черновые коммуникации</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Укладка труб отопления Rehau в защитном кожухе без стыков в полу.</li>
+                  <li>Опрессовка отопления давлением 10 бар в течение 24 часов.</li>
+                  <li>Прокладка силового кабеля в негорючей ПВХ-гофре.</li>
+                  <li>Контроль уклонов канализационных труб лазерным уровнем.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="3">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>04. Штукатурка и стяжка</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Грунтование стен с контролем влажности основания.</li>
+                  <li>Выравнивание стен по металлическим маякам, удаляемым после.</li>
+                  <li>Устройство полусухой стяжки с фиброволокном.</li>
+                  <li>Контроль ровности стяжки правилом 2м (просвет до 1 мм).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="4">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>05. Чистовые работы</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Шлифовка стен под проявочные лампы маляра.</li>
+                  <li>Монтаж скрытых дверей и теневых профилей.</li>
+                  <li>Контроль сопряжений плитки и паркета без порогов (перепад 0 мм).</li>
+                  <li>Выравнивание швов настенных обоев и декоративных штукатурок.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border border-surface-container-highest dark:border-neutral-800 rounded-xl bg-surface-container-low dark:bg-neutral-900/40 overflow-hidden accordion-item" data-accordion-index="5">
+              <button class="w-full px-6 py-4 flex justify-between items-center text-left font-headline text-sm font-bold uppercase tracking-wider accordion-header focus:outline-none">
+                <span>06. Финишный надзор</span>
+                <span class="accordion-icon font-light text-lg">+</span>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out accordion-panel">
+                <ul class="px-6 pb-4 space-y-2 text-xs text-on-surface-variant dark:text-neutral-400 list-disc list-inside leading-relaxed">
+                  <li>Аудит климатических систем под нагрузкой в течение 72 часов.</li>
+                  <li>Тепловизионное обследование на наличие теплопотерь.</li>
+                  <li>Калибровочный запуск распределительных электрошкафов.</li>
+                  <li>Составление финальной папки сдачи объекта.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTI-STEP CALCULATOR MODAL (WIZARD OVERLAY) -->
+  <div id="calc-modal" class="fixed inset-0 z-50 overflow-hidden hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300" id="calc-backdrop"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="bg-surface dark:bg-neutral-950 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-surface-container-highest dark:border-neutral-900 transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[90vh]" id="calc-container">
+        
+        <div class="px-6 py-5 border-b border-surface-container-highest dark:border-neutral-800 flex justify-between items-center bg-surface-container-lowest dark:bg-black">
+          <h3 class="font-headline text-md font-bold text-on-surface dark:text-white uppercase tracking-wider">Параметры вашего ремонта</h3>
+          <button id="close-calc-btn" class="text-on-surface-variant dark:text-neutral-400 hover:text-primary text-3xl font-light focus:outline-none" aria-label="Закрыть калькулятор">&times;</button>
+        </div>
+
+        <div class="p-6 overflow-y-auto flex-1 flex flex-col justify-center">
+          
+          <!-- Indicator -->
+          <div class="flex gap-2 justify-center mb-8" id="modal-calc-indicator">
+            <div class="w-10 h-1 bg-primary step-line active" data-step="1"></div>
+            <div class="w-10 h-1 bg-surface-container-highest dark:bg-neutral-800 step-line" data-step="2"></div>
+            <div class="w-10 h-1 bg-surface-container-highest dark:bg-neutral-800 step-line" data-step="3"></div>
+            <div class="w-10 h-1 bg-surface-container-highest dark:bg-neutral-800 step-line" data-step="4"></div>
+          </div>
+
+          <form id="calc-form" class="space-y-6" novalidate>
+            
+            <!-- STEP 1 -->
+            <div class="calc-step-view active" data-step="1">
+              <h4 class="font-headline text-lg font-bold mb-4 text-on-surface dark:text-white uppercase text-center">Выверим тип объекта</h4>
+              <div class="flex flex-col gap-3">
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="radio" name="object-type" value="apartment" checked class="text-primary focus:ring-primary h-4 w-4 border-gray-300">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Премиум квартира</span>
+                </label>
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="radio" name="object-type" value="house" class="text-primary focus:ring-primary h-4 w-4 border-gray-300">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Загородная резиденция</span>
+                </label>
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="radio" name="object-type" value="commercial" class="text-primary focus:ring-primary h-4 w-4 border-gray-300">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Бизнес-пространство</span>
+                </label>
+              </div>
+              <div class="flex justify-end pt-6 border-t border-surface-container-highest dark:border-neutral-800 mt-6">
+                <button type="button" class="next-step-btn bg-primary text-on-primary px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Продолжить</button>
+              </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="calc-step-view" data-step="2">
+              <h4 class="font-headline text-lg font-bold mb-4 text-on-surface dark:text-white uppercase text-center">Какая площадь?</h4>
+              <div class="space-y-4 text-center py-4">
+                <div class="text-4xl font-headline font-black text-primary"><span id="range-value">120</span> м²</div>
+                <input type="range" id="area-slider" name="object-area" min="40" max="800" value="120" step="5" class="w-full accent-primary bg-surface-container-highest dark:bg-neutral-800 rounded-lg appearance-none h-1">
+                <div class="flex justify-between text-xs text-on-surface-variant dark:text-neutral-400">
+                  <span>40 м²</span>
+                  <span>800 м²</span>
+                </div>
+              </div>
+              <div class="flex justify-between pt-6 border-t border-surface-container-highest dark:border-neutral-800 mt-6">
+                <button type="button" class="prev-step-btn border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Назад</button>
+                <button type="button" class="next-step-btn bg-primary text-on-primary px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Продолжить</button>
+              </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="calc-step-view" data-step="3">
+              <h4 class="font-headline text-lg font-bold mb-4 text-on-surface dark:text-white uppercase text-center">Особые требования к инженерии</h4>
+              <div class="flex flex-col gap-3">
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="checkbox" name="engineering" value="hvac" checked class="text-primary focus:ring-primary h-4 w-4 border-gray-300 rounded">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Вентиляция и кондиционирование</span>
+                </label>
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="checkbox" name="engineering" value="smarthome" class="text-primary focus:ring-primary h-4 w-4 border-gray-300 rounded">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Умный дом (KNX)</span>
+                </label>
+                <label class="relative flex items-center p-4 border border-surface-container-highest dark:border-neutral-800 rounded-xl cursor-pointer hover:border-primary transition-colors bg-surface-container-low dark:bg-neutral-900/40">
+                  <input type="checkbox" name="engineering" value="acoustics" class="text-primary focus:ring-primary h-4 w-4 border-gray-300 rounded">
+                  <span class="ml-4 font-headline text-sm text-on-surface dark:text-white font-bold uppercase">Акустическая звукоизоляция</span>
+                </label>
+              </div>
+              <div class="flex justify-between pt-6 border-t border-surface-container-highest dark:border-neutral-800 mt-6">
+                <button type="button" class="prev-step-btn border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Назад</button>
+                <button type="button" class="next-step-btn bg-primary text-on-primary px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Продолжить</button>
+              </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="calc-step-view" data-step="4">
+              <h4 class="font-headline text-lg font-bold mb-6 text-on-surface dark:text-white uppercase text-center">Контакты для отправки сметы</h4>
+              <div class="space-y-4">
+                <div class="form-field flex flex-col gap-2">
+                  <label class="text-[11px] font-label uppercase text-on-surface-variant dark:text-neutral-400 font-bold" for="client-name">Ваше имя</label>
+                  <input type="text" id="client-name" name="name" placeholder="Константин" required autocomplete="name" class="p-3 border border-surface-container-highest dark:border-neutral-800 rounded-lg bg-surface dark:bg-neutral-900 text-on-surface dark:text-white text-sm focus:outline-none focus:border-primary">
+                  <span class="field-error text-xs text-error hidden" id="name-error">Пожалуйста, введите ваше имя</span>
+                </div>
+                <div class="form-field flex flex-col gap-2">
+                  <label class="text-[11px] font-label uppercase text-on-surface-variant dark:text-neutral-400 font-bold" for="client-phone">Номер телефона</label>
+                  <input type="tel" id="client-phone" name="phone" placeholder="+7 (843) 000-00-00" required autocomplete="tel" class="p-3 border border-surface-container-highest dark:border-neutral-800 rounded-lg bg-surface dark:bg-neutral-900 text-on-surface dark:text-white text-sm focus:outline-none focus:border-primary">
+                  <span class="field-error text-xs text-error hidden" id="phone-error">Введите корректный номер телефона</span>
+                </div>
+              </div>
+              <div class="flex justify-between pt-6 border-t border-surface-container-highest dark:border-neutral-800 mt-6">
+                <button type="button" class="prev-step-btn border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Назад</button>
+                <button type="submit" class="bg-primary text-on-primary px-8 py-3 rounded uppercase font-bold tracking-wider text-xs" id="submit-btn">Рассчитать смету</button>
+              </div>
+            </div>
+
+            <!-- SUCCESS PANEL -->
+            <div class="calc-success-view flex-col items-center justify-center text-center space-y-4 py-8 hidden">
+              <span class="bg-primary/10 p-4 rounded-full flex items-center justify-center"><svg class="w-12 h-12 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+              <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white uppercase">Расчет запущен!</h4>
+              <p class="text-sm text-on-surface-variant dark:text-neutral-400 leading-relaxed max-w-sm">Наш ведущий инженер свяжется с вами в течение 15 минут для уточнения технических деталей и отправки предварительного бюджета.</p>
+              <button type="button" class="reset-calc-btn mt-6 border border-surface-container-highest dark:border-neutral-800 text-on-surface dark:text-white px-8 py-3 rounded uppercase font-bold tracking-wider text-xs">Рассчитать заново</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+</body>
+</html>
